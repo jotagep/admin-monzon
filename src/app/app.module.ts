@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// Temporal (Pruebas)
+import { FormsModule } from '@angular/forms';
+
 // Custom modules
 import { PagesModule } from './pages/pages.module';
 
@@ -16,10 +19,12 @@ import { RegisterComponent } from './login/register.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     PagesModule,
     APP_ROUTES
   ],
