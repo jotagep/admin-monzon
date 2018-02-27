@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+#themecolors {
+    padding: 0;
+}
+
+#themecolors > li {
+    cursor: pointer;
+}
+ 

@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 // Temporal (Pruebas)
 import { FormsModule } from '@angular/forms';
 
+// Services Module
+import { ServiceModule } from './services/service.module';
+
 // Custom modules
 import { PagesModule } from './pages/pages.module';
 
@@ -25,6 +28,7 @@ import { RegisterComponent } from './login/register.component';
   imports: [
     BrowserModule,
     FormsModule,
+    ServiceModule,
     PagesModule,
     APP_ROUTES
   ],
