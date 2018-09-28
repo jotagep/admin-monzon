@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 // Temporal (Pruebas)
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Services Module
 import { ServiceModule } from './services/service.module';
@@ -28,9 +28,10 @@ import { RegisterComponent } from './login/register.component';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     ServiceModule,
-    PagesModule,
-    APP_ROUTES
+    APP_ROUTES,
+    PagesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

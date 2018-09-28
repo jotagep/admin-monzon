@@ -2,7 +2,7 @@
     padding: 0;
 }
 
-#themecolors > li {
+#themecolors > li > a{
     cursor: pointer;
 }
  

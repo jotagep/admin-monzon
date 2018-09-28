@@ -13,7 +13,7 @@ export class RxjsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor() {
-    this. subscription = this.regresaObservable()
+    this.subscription = this.regresaObservable()
       .subscribe(
         x => console.log(x),
         err => console.error(err),
