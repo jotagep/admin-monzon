@@ -6,13 +6,19 @@ import { Usuario } from '../../models/usuario.model';
 import { URL_API } from './../../config/config';
 import { map } from 'rxjs/operators';
 
+import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
+
 @Injectable()
 export class UsuarioService {
 
   usuario: Usuario;
   token: string;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private _subirImg: SubirArchivoService
+  ) {
     console.log('Servicio usuario listo');
     this.cargarStorage();
   }
@@ -22,14 +28,12 @@ export class UsuarioService {
   }
 
   guardarStorage (id: string, token: string, usuario: Usuario) {
-    localStorage.setItem('id', id);
-    localStorage.setItem('token', token);
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-
     this.usuario = usuario;
     this.token = token;
 
-    this.router.navigate(['/login']);
+    localStorage.setItem('id', id);
+    localStorage.setItem('token', token);
+    localStorage.setItem('usuario', JSON.stringify(usuario));
   }
 
   cargarStorage () {
@@ -63,7 +67,7 @@ export class UsuarioService {
     .pipe(
       map((resp: any) => {
         this.guardarStorage(resp.id, resp.token, resp.usuario);
-        return true;
+        return resp.usuario;
       })
     );
   }
@@ -74,8 +78,31 @@ export class UsuarioService {
     return this.http.post(url, { token })
       .pipe(
         map((resp: any) => {
+          console.log(resp);
           this.guardarStorage(resp.id, resp.token, resp.usuario);
-          this.router.navigate(['/dashboard']);
+          return true;
+        })
+      );
+  }
+
+  updateUser(user: Usuario) {
+    const url = `${URL_API}/usuario/${user._id}?token=${this.token}`;
+
+    return this.http.put(url, user)
+      .pipe(
+        map( (resp: any) => {
+          this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+          return true;
+        })
+      );
+  }
+
+  updateImg(file: File) {
+    return this._subirImg.subirArchivo(file, 'usuarios', this.usuario._id)
+      .pipe(
+        map((resp: any) => {
+          this.usuario.img = resp.usuario.img;
+          this.guardarStorage(resp.usuario._id, this.token, this.usuario);
           return true;
         })
       );

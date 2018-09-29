@@ -1,0 +1,43 @@
+<div class="row animated fadeIn">
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Perfil del usuario</h4>
+        <h6 class="card-subtitle">{{usuario.name}}</h6>
+        <form ngNativeValidate #f="ngForm" (ngSubmit)="guardar(f)" class="form p-t-20">
+          <div class="form-group">
+            <label for="exampleInputuname">Nombre de usuario</label>
+            <div class="input-group">
+              <div class="input-group-addon"><i class="ti-user"></i></div>
+              <input [ngModel]="usuario.name" name="name" type="text" class="form-control" placeholder="Nombre de usuario" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Correo del usuario</label>
+            <div class="input-group">
+              <div class="input-group-addon"><i class="ti-email"></i></div>
+              <input [ngModel]="usuario.email" name="email" type="email" class="form-control" placeholder="Correo" required [disabled]="usuario.google">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Foto del usuario</h4>
+          <h6 class="card-subtitle">Nombre Usuario</h6>
+
+          <img [src]="imgTemp ? imgTemp : usuario.img | imagen" [alt]="usuario.name" class="w150 mb-3">
+
+          <input #upl type="file" (change)="onFileSelected($event)" name="imagen"  class="form-control mb-3">
+      
+          <button type="button" (click)="updateImg()" [disabled]="!imgUpload" class="btn btn-block btn-success waves-effect waves-light m-r-10">Subir</button>
+        </div>
+      </div>
+  </div>
+</div>

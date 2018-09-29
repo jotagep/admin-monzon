@@ -5,6 +5,9 @@ import { NgForm } from '@angular/forms';
 import { UsuarioService } from './../services/usuario/usuario.service';
 import { Subscription } from 'rxjs/Subscription';
 
+// SweetAlert
+import swal from 'sweetalert2';
+
 declare function init_plugins();
 declare const gapi: any;
 
@@ -31,6 +34,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     init_plugins();
+
+    if (this._userService.estaLogueado()) {
+      this.router.navigate(['/dashboard']);
+    }
+
     this.googleInit();
 
     this.email = localStorage.getItem('email') || '';
@@ -55,7 +63,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.auth2.attachClickHandler(element.nativeElement, {}, (googleUser) => {
       const token = googleUser.getAuthResponse().id_token;
 
-      this._userService.loginGoogle(token);
+      this._userService.loginGoogle(token)
+        .subscribe(() => window.location.reload());
     });
   }
 
@@ -70,7 +79,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.loginUser = this._userService.loginUser(form.value.email, form.value.password)
-      .subscribe( () => this.router.navigate(['/dashboard']));
+      .subscribe( (user) => {
+        this.showDialog(user.name);
+        this.router.navigate(['/dashboard']);
+      });
+  }
+
+  showDialog(name: string) {
+    swal({
+      type: 'success',
+      title: `Bienvenido ${name}`,
+      showConfirmButton: false,
+      timer: 1500
+    });
   }
 
   ngOnDestroy() {

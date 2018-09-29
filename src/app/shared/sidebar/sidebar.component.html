@@ -9,18 +9,18 @@
       <ul id="sidebarnav">
         <li class="user-profile">
           <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-            <img src="assets/images/users/profile.png" alt="user" />
-            <span class="hide-menu">Steave Jobs </span>
+            <img [src]="usuario.img | imagen" [alt]="usuario.name" />
+            <span class="hide-menu">{{usuario.name}}</span>
           </a>
           <ul aria-expanded="false" class="collapse">
             <li>
-              <a routerLinkActive="active" routerLink="">My Profile </a>
+              <a routerLinkActive="active" routerLink="/profile">My Profile </a>
             </li>
             <li>
-              <a routerLinkActive="active" routerLink="">My Balance</a>
+              <a routerLink="">My Balance</a>
             </li> 
             <li>
-              <a routerLinkActive="active" routerLink="">Inbox</a>
+              <a routerLink="">Inbox</a>
             </li>
             <li>
               <a routerLinkActive="active" routerLink="/account-settings">Account Setting</a>

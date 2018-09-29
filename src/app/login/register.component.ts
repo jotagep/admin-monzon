@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { Subscription } from 'rxjs/Subscription';
 // SweetAlert
 import swal from 'sweetalert2';
 
@@ -18,9 +19,10 @@ declare function init_plugins();
   templateUrl: './register.component.html',
   styleUrls: ['./login.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
+  subsRegister: Subscription;
 
   constructor(
     private _userService: UsuarioService,
@@ -29,6 +31,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     init_plugins();
+
+    if (this._userService.estaLogueado()) {
+      this.router.navigate(['/dashboard']);
+    }
 
     this.form = new FormGroup({
       name: new FormControl(null, Validators.required),
@@ -65,12 +71,16 @@ export class RegisterComponent implements OnInit {
       this.form.value.password
     );
 
-    this._userService.crearUser(user)
+    this.subsRegister = this._userService.crearUser(user)
       .subscribe(resp => {
         swal('Usuario Creado', user.email, 'success');
         this.router.navigate(['/login']);
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.subsRegister.unsubscribe();
   }
 
 }
