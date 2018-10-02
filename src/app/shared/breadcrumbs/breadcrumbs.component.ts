@@ -23,7 +23,6 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   ) {
     this.subsRoute = this.getDataRoute()
     .subscribe(data => {
-      console.log(data);
       this.titulo = data.titulo;
       this.title.setTitle(this.titulo);
 

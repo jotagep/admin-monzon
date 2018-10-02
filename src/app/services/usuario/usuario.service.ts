@@ -19,7 +19,6 @@ export class UsuarioService {
     private router: Router,
     private _subirImg: SubirArchivoService
   ) {
-    console.log('Servicio usuario listo');
     this.cargarStorage();
   }
 
@@ -106,5 +105,27 @@ export class UsuarioService {
           return true;
         })
       );
+  }
+
+  getUsers(pagina: number = 0) {
+    const desde = pagina * 5;
+    const url = `${URL_API}/usuario?desde=${desde}`;
+
+    return this.http.get(url);
+  }
+
+  searchUsers(busqueda: string) {
+    const url = `${URL_API}/busqueda/coleccion/usuarios/${busqueda}`;
+
+    return this.http.get(url)
+      .pipe(
+        map( (resp: any) => resp.usuarios)
+      );
+  }
+
+  deleteUser(id: string) {
+    const url = `${URL_API}/usuario/${id}?token=${this.token}`;
+
+    return this.http.delete(url);
   }
 }
