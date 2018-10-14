@@ -54,14 +54,14 @@ export class ModalUploadComponent implements OnInit, OnDestroy {
   subirArchivo() {
     this.subsUpload = this._uploadService.subirArchivo(this.imgUpload, this._modalUpload.tipo, this._modalUpload.id)
       .subscribe( (resp: any) => {
-        this.closeModal();
         swal({
           type: 'success',
-          title: `Imagen ${resp.usuario.name} actualizada`,
+          title: `Imagen ${this._modalUpload.name} actualizada`,
           showConfirmButton: false,
           timer: 1500
         });
-        this._modalUpload.notificacion.emit(true);
+        this.closeModal();
+        this._modalUpload.notificacion.emit(resp);
       });
   }
 

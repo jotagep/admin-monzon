@@ -10,11 +10,12 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { HospitalesComponent } from './hospitales/hospitales.component';
+import { MedicosComponent } from './medicos/medicos.component';
+import { MedicoComponent } from './medicos/medico.component';
 
 // Guards
 import { LoginGuard } from '../services/service.index';
-
-
 
 const pagesRoutes: Routes = [
     {
@@ -30,6 +31,9 @@ const pagesRoutes: Routes = [
             { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Settings' } },
             // Mantenimientos
             { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimientos de Usuarios' } },
+            { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimientos de Hospitales' } },
+            { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimientos de Médicos' } },
+            { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Actualizar Médico' } },
             { path: 'profile', component: ProfileComponent, data: { titulo: 'Profile' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]

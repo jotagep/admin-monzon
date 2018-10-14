@@ -771,6 +771,8 @@ use profile section
 ******************/
 .sidebar-nav .user-profile > a img {
   width: 30px;
+  height: 30px;
+  object-fit: cover;
   border-radius: 100%;
   margin-right: 10px; }
 
@@ -1064,6 +1066,8 @@ File: scss
       background: rgba(0, 0, 0, 0.05); }
   .topbar .profile-pic {
     width: 30px;
+    height: 30px;
+    object-fit: cover;
     border-radius: 100%; }
   .topbar .dropdown-menu {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
@@ -1088,10 +1092,13 @@ File: scss
         padding: 10px 15px; }
         .topbar ul.dropdown-user li .dw-user-box .u-img {
           width: 70px;
+          height: 70px;
           display: inline-block;
           vertical-align: top; }
           .topbar ul.dropdown-user li .dw-user-box .u-img img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius: 5px; }
         .topbar ul.dropdown-user li .dw-user-box .u-text {
           display: inline-block;

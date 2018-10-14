@@ -90,7 +90,9 @@ export class UsuarioService {
     return this.http.put(url, user)
       .pipe(
         map( (resp: any) => {
-          this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+          if (this.usuario._id === resp.usuario._id) {
+            this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+          }
           return true;
         })
       );
@@ -107,9 +109,12 @@ export class UsuarioService {
       );
   }
 
-  getUsers(pagina: number = 0) {
-    const desde = pagina * 5;
-    const url = `${URL_API}/usuario?desde=${desde}`;
+  getUsers(pagina?: number) {
+    let url = `${URL_API}/usuario`;
+    if (pagina >= 0) {
+      const desde = pagina * 5;
+      url += `?desde=${desde}`;
+    }
 
     return this.http.get(url);
   }

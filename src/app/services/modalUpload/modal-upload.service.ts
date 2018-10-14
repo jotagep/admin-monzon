@@ -9,7 +9,7 @@ export class ModalUploadService {
 
   show: boolean;
 
-  notificacion = new EventEmitter<boolean>();
+  notificacion = new EventEmitter<any>();
 
   constructor() {
     this.show = false;

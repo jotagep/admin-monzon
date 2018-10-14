@@ -1,3 +1,5 @@
+export { MedicoService } from './medico/medico.service';
+export { HospitalService } from './hospital/hospital.service';
 export { ModalUploadService } from './modalUpload/modal-upload.service';
 export { LoginGuard } from './guards/login.guard';
 export { SettingsService } from './settings/settings.service';

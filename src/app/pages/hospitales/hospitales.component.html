@@ -1,0 +1,75 @@
+<div class='row animated fadeIn'>
+  <div class='col-12'>
+    <div class='card'>
+      <div class='card-body'>
+        <input #input (keyup)="buscarHospital(input.value)" type="text" class="form-control" name="busqueda"
+          placeholder="Buscar hospital">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="loading">
+  <div class="col-sm-12">
+    <div class="alert alert-warning text-center">
+      <strong>Cargando</strong>
+      <br>
+      <i class="fa fa-refresh fa-spin fa-2x"></i>
+      <br>
+      <span>Espere por favor</span>
+    </div>
+  </div>
+</div>
+
+<div class='row animated fadeIn' *ngIf="!loading">
+  <div class='col-12'>
+    <div class='card'>
+      <div class='card-body position-relative'>
+        <h3 class="d-inline-block card-title">Hospitales Registrados ( <small>{{total}}</small> )</h3>
+        <div class="float-right">
+          <button (click)="crearHospital()" type="button" class="d-inline-block ml-auto btn waves-effect waves-light btn-rounded btn-primary">
+            <i class="fa fa-plus"></i>
+            Crear Hospital
+          </button>
+        </div>
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Hospital</th>
+              <th>Añadido por</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hospital of hospitales">
+              <td class="w70">
+                <img (click)="mostrarModal(hospital._id, hospital.name)" [src]="hospital.img | imagen:'hospitales'"
+                  [alt]="hospital.name" class="img-50 pointer">
+              </td>
+              <td>
+                <input [(ngModel)]="hospital.name" type="text" name="name" class="form-control" required>
+              </td>
+              <td>
+                {{ hospital.usuario.name }}
+              </td>
+              <td>
+                <button (click)="guardarHospital(hospital)" [disabled]="hospital.name.length <= 0" class="btn btn-primary">
+                  <i class="fa fa-save"></i>
+                </button>
+                <button (click)="borrarHospital(hospital)" class="btn btn-danger">
+                  <i class="fa fa-trash-o"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button (click)="pag(-1)" [disabled]="pagina === 0" class="btn btn-secondary">Prev</button>
+        <span class="m-l-5 m-r-5">{{pagina + 1}}</span>
+        <button (click)="pag(1)" [disabled]="(pagina + 1) * 5 >= total" class="btn btn-secondary">Next</button>
+      </div>
+    </div>
+  </div>
+</div>

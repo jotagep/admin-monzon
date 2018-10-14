@@ -21,6 +21,10 @@
     object-fit: cover;
 }
 
+.table td {
+    vertical-align: middle !important;
+}
+
 .show {
     display: block !important;
 }
