@@ -1,18 +1,23 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { Usuario } from '../../models/usuario.model';
 import { URL_API } from './../../config/config';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
+import { Menu } from '../../models/menu.interface';
+import { Observable } from 'rxjs/Observable';
+
 
 @Injectable()
 export class UsuarioService {
 
   usuario: Usuario;
   token: string;
+  menu: Menu[] = [];
 
   constructor(
     private http: HttpClient,
@@ -26,19 +31,22 @@ export class UsuarioService {
     return this.token ? true : false;
   }
 
-  guardarStorage (id: string, token: string, usuario: Usuario) {
+  guardarStorage (id: string, token: string, usuario: Usuario, menu: Menu[]) {
     this.usuario = usuario;
     this.token = token;
+    this.menu = menu;
 
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('menu', JSON.stringify(menu));
   }
 
   cargarStorage () {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
       this.usuario = JSON.parse(localStorage.getItem('usuario'));
+      this.menu = JSON.parse(localStorage.getItem('menu'));
     }
   }
 
@@ -51,10 +59,12 @@ export class UsuarioService {
   logout() {
     this.token = null;
     this.usuario = null;
+    this.menu = [];
 
     localStorage.removeItem('id');
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('menu');
 
     this.router.navigate(['/login']);
   }
@@ -65,7 +75,7 @@ export class UsuarioService {
     return this.http.post(url, { email, password })
     .pipe(
       map((resp: any) => {
-        this.guardarStorage(resp.id, resp.token, resp.usuario);
+        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
         return resp.usuario;
       })
     );
@@ -78,7 +88,7 @@ export class UsuarioService {
       .pipe(
         map((resp: any) => {
           console.log(resp);
-          this.guardarStorage(resp.id, resp.token, resp.usuario);
+          this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
           return true;
         })
       );
@@ -91,7 +101,7 @@ export class UsuarioService {
       .pipe(
         map( (resp: any) => {
           if (this.usuario._id === resp.usuario._id) {
-            this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+            this.guardarStorage(resp.usuario._id, this.token, resp.usuario, this.menu);
           }
           return true;
         })
@@ -103,7 +113,7 @@ export class UsuarioService {
       .pipe(
         map((resp: any) => {
           this.usuario.img = resp.usuario.img;
-          this.guardarStorage(resp.usuario._id, this.token, this.usuario);
+          this.guardarStorage(resp.usuario._id, this.token, this.usuario, this.menu);
           return true;
         })
       );

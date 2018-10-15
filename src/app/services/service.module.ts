@@ -6,13 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import {
   SettingsService,
   SharedService,
-  SidebarService,
   UsuarioService,
   LoginGuard,
   SubirArchivoService,
   ModalUploadService,
   HospitalService,
-  MedicoService
+  MedicoService,
+  AdminGuard
 } from './service.index';
 
 @NgModule({
@@ -20,9 +20,9 @@ import {
   providers: [
     SettingsService,
     SharedService,
-    SidebarService,
     UsuarioService,
     LoginGuard,
+    AdminGuard,
     SubirArchivoService,
     ModalUploadService,
     HospitalService,

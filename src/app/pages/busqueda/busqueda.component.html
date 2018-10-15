@@ -1,0 +1,71 @@
+<div class="row animated">
+    <h3 class="px-3">Busqueda del termino: <strong class="text-uppercase">{{termino}}</strong></h3>
+</div>
+
+<div class="row animated">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Usuarios</h4>
+        <table class="table table-hover">
+          <tbody>
+            <tr [routerLink]="['/usuarios']" *ngFor="let user of usuarios" class="pointer">
+              <td class="w70">
+                <img [src]="user?.img | imagen" [alt]="user?.name" class="img-50">
+              </td>
+              <td>{{user?.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="alert alert-light" *ngIf="usuarios.length === 0">
+            - No hay usuarios -
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Medicos</h4>
+        <table class="table table-hover">
+          <tbody>
+            <tr *ngFor="let medico of medicos" [routerLink]="['/medico', medico._id]" class="pointer">
+              <td class="w70">
+                <img [src]="medico?.img | imagen:'medicos'" [alt]="medico?.name" class="img-50">
+              </td>
+              <td>{{medico?.name}}</td>
+              <td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="alert alert-light" *ngIf="medicos.length === 0">
+          - No hay medicos -
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Hospitales</h4>
+          <table class="table table-hover">
+            <tbody>
+              <tr [routerLink]="['/hospitales']" *ngFor="let hospital of hospitales" class="pointer">
+                <td class="w70">
+                  <img [src]="hospital?.img | imagen:'hospitales'" [alt]="hospital?.name" class="img-50">
+                </td>
+                <td>{{hospital?.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="alert alert-light" *ngIf="hospitales.length === 0">
+              - No hay hospitales -
+            </div>
+        </div>
+      </div>
+    </div>
+
+</div>

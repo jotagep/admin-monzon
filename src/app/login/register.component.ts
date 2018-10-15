@@ -55,9 +55,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   registrarUsuario() {
-    console.log(this.form.valid);
-    console.log(this.form.value);
-
     if (this.form.invalid) { return; }
 
     if (!this.form.value.condiciones) {
@@ -75,6 +72,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         swal('Usuario Creado', user.email, 'success');
         this.router.navigate(['/login']);
+      },
+      err => {
+        swal(err.error.mensaje, err.error.errors.message, 'error');
+        this.form.reset();
       }
     );
   }

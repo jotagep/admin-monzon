@@ -1,4 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  OnDestroy
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -6,7 +12,7 @@ import { UsuarioService } from './../services/usuario/usuario.service';
 import { Subscription } from 'rxjs/Subscription';
 
 // SweetAlert
-import swal from 'sweetalert2';
+import swal, { SweetAlertType } from 'sweetalert2';
 
 declare function init_plugins();
 declare const gapi: any;
@@ -17,20 +23,16 @@ declare const gapi: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
-
   email: string;
   recuerdame: boolean = false;
 
   auth2: any;
-  @ViewChild('btnGoogle') buttonGoogle: ElementRef;
+  @ViewChild('btnGoogle')
+  buttonGoogle: ElementRef;
 
   loginUser: Subscription;
 
-  constructor(
-    private router: Router,
-    private _userService: UsuarioService
-  ) { }
+  constructor(private router: Router, private _userService: UsuarioService) {}
 
   ngOnInit() {
     init_plugins();
@@ -50,7 +52,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   googleInit() {
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.init({
-        client_id: '425845860292-qi82t0om4l6ateiigaq6dsdvp6nf15tt.apps.googleusercontent.com',
+        client_id:
+          '425845860292-qi82t0om4l6ateiigaq6dsdvp6nf15tt.apps.googleusercontent.com',
         cookiepolicy: 'single_host_origin',
         scope: 'profile email'
       });
@@ -59,18 +62,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  attachSignIn (element: ElementRef) {
-    this.auth2.attachClickHandler(element.nativeElement, {}, (googleUser) => {
+  attachSignIn(element: ElementRef) {
+    this.auth2.attachClickHandler(element.nativeElement, {}, googleUser => {
       const token = googleUser.getAuthResponse().id_token;
 
-      this._userService.loginGoogle(token)
+      this._userService
+        .loginGoogle(token)
         .subscribe(() => window.location.reload());
     });
   }
 
   ingresar(form: NgForm) {
-
-    if (form.invalid) { return; }
+    if (form.invalid) {
+      return;
+    }
 
     if (form.value.recuerdame) {
       localStorage.setItem('email', form.value.email);
@@ -78,17 +83,24 @@ export class LoginComponent implements OnInit, OnDestroy {
       localStorage.removeItem('email');
     }
 
-    this.loginUser = this._userService.loginUser(form.value.email, form.value.password)
-      .subscribe( (user) => {
-        this.showDialog(user.name);
-        this.router.navigate(['/dashboard']);
-      });
+    this.loginUser = this._userService
+      .loginUser(form.value.email, form.value.password)
+      .subscribe(
+        user => {
+          this.showDialog(`Bienvenido ${user.name}`, 'success');
+          this.router.navigate(['/dashboard']);
+        },
+        err => {
+          form.resetForm();
+          this.showDialog(err.error.mensaje, 'error');
+        }
+      );
   }
 
-  showDialog(name: string) {
+  showDialog(text: string, type: SweetAlertType) {
     swal({
-      type: 'success',
-      title: `Bienvenido ${name}`,
+      type: type,
+      title: text,
       showConfirmButton: false,
       timer: 1500
     });

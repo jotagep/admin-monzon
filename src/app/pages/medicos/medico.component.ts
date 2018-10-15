@@ -90,7 +90,7 @@ export class MedicoComponent implements OnInit, OnDestroy {
       this.subsMedico = this._medicoService.newMedico(this.formMedico)
       .subscribe((medico: Medico) => {
         this.showDialog(`Medico ${medico.name} creado`);
-        this.router.navigate([`medico/${medico._id}`]);
+        this.router.navigate([`medico`, medico._id]);
       });
     }
   }
