@@ -11,7 +11,7 @@ import { ServiceModule } from './services/service.module';
 import { PipesModule } from './pipes/pipes.module';
 
 // Custom modules
-import { PagesModule } from './pages/pages.module';
+import { SharedModule } from './shared/shared.module';
 
 // Routes
 import { APP_ROUTES } from './app.routes';
@@ -20,13 +20,15 @@ import { APP_ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
+import { PagesComponent } from './pages/pages.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PagesComponent
   ],
   imports: [
     BrowserModule,
@@ -34,8 +36,8 @@ import { RegisterComponent } from './login/register.component';
     ReactiveFormsModule,
     ServiceModule,
     APP_ROUTES,
-    PagesModule,
-    PipesModule
+    PipesModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

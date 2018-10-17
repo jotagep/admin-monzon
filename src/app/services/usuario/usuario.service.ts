@@ -94,6 +94,20 @@ export class UsuarioService {
       );
   }
 
+  renewToken() {
+    const url = `${URL_API}/login/newtoken?token=${this.token}`;
+
+    return this.http.get(url)
+      .pipe(
+        map((resp: any) => {
+          this.token = resp.token;
+          localStorage.setItem('token', this.token);
+
+          return true;
+        })
+      );
+  }
+
   updateUser(user: Usuario) {
     const url = `${URL_API}/usuario/${user._id}?token=${this.token}`;
 

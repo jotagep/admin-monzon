@@ -34,7 +34,7 @@ export class ModalUploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('Modal listo');
+
   }
 
 
