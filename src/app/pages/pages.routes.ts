@@ -26,7 +26,7 @@ const pagesRoutes: Routes = [
   {
     path: 'progress',
     component: ProgressComponent,
-    data: { titulo: 'Progress' }
+    data: { titulo: 'Inputs de progreso' }
   },
   {
     path: 'graficas1',
@@ -42,12 +42,12 @@ const pagesRoutes: Routes = [
   {
     path: 'account-settings',
     component: AccountSettingsComponent,
-    data: { titulo: 'Settings' }
+    data: { titulo: 'Ajustes' }
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    data: { titulo: 'Profile' }
+    data: { titulo: 'Mi Perfil' }
   },
   {
     path: 'busqueda/:termino',
